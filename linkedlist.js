@@ -121,6 +121,35 @@ if (node.next == null && node.value !== value) {
 
     },
 
+        toString: function(node = this.list.head) {
+            // this function is to console log the list
+            // lets do this recursively.
+            if (node.next == null) {
+                if (node.value) {return `(${node.value}) -> null`}
+                else {return 'null'}
+            }
+            return `(${node.value})` + ` -> ` + this.toString(node.next)
+
+        },
+        
+        insertAt: function(value, index, node = this.list.head, prevnode = this.list.head, count = 0) {
+            // inserts the given value at the specified index..
+            // go through one by one, counting the index each time until we have a match.. 
+            // once we have a match we are to set the previous nodes next value to the insert value, and the current nodes next value to the rest of the list..
+
+
+            if (node.next == null) {
+                // reached the end of the list..
+               
+            }
+            
+           
+            prevnode = node
+            return this.insertAt(value,index, node.next, prevnode,count)
+
+            
+        },
+
     list: { head: {
         
       
@@ -137,12 +166,13 @@ const dog = linkedList()
 //console.log(dog.list.head)
 //console.log(dog.tail(), 'tailfn')
 //dog.append(1)
-dog.append(122)
-dog.append(3)
+//dog.append(122)
+//dog.append(3)
 
-dog.append(17)
+//dog.append(17)
+console.log(dog.toString())
 //dog.pop()
-  console.log(  dog.find(122))
+ // console.log(  dog.find(122))
     console.log(dog.list)
 
 function node(value) {
