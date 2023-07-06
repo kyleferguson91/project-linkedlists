@@ -39,7 +39,7 @@ if (this.list.head.value == null) {
         }
         // we only want to add it to the front of the list, 
         // we store the current item in old reference, 
-        // and we set the 
+        // and we set the next pointer of the new node to the prior first element, which will then have the chain to all the upcoming elements
         let oldref = this.list.head
         this.list.head = node(value)
         this.list.head.next = oldref
@@ -132,19 +132,20 @@ if (node.next == null && node.value !== value) {
 
         },
         
-        insertAt: function(value, index, node = this.list.head, prevnode = this.list.head, count = 0) {
+        insertAt: function(value, index, startnode = this.list.head, prevnode = this.list.head, count = 0) {
             // inserts the given value at the specified index..
             // go through one by one, counting the index each time until we have a match.. 
             // once we have a match we are to set the previous nodes next value to the insert value, and the current nodes next value to the rest of the list..
             if (index == count) {
                 if (index == 0 && count == 0) {
+                    // if its the first node that we wanna insert at, use our prepend method
                     this.prepend(value)
                     return
                 }
                // set the current nodes next value to the current node+
                 let current = node
            
-                let stored = createnode(value)
+                let stored = node(value)
                 
           
                 prevnode.next = stored
@@ -153,9 +154,9 @@ if (node.next == null && node.value !== value) {
                return
             }
             
-            if (node.next == null) {
+            if (startnode.next == null) {
                 // reached the end of the list..
-               return
+               return 'index out of bounds'
             }
      
 
@@ -163,12 +164,57 @@ if (node.next == null && node.value !== value) {
             // otherwise we can check if we are at the index..
             
            
-            prevnode = node
+            prevnode = startnode
             count++ 
-            return this.insertAt(value,index, node.next, prevnode,count)
+            return this.insertAt(value,index, startnode.next, prevnode,count)
 
             
         },
+        
+        removeAt: function(index, count = 0, selectednode = this.list.head, prevnode = this.list.head) {
+
+            // need to go throught linked list until we reach our desired index
+
+
+            if (count == index) {
+                // we are at the proper index, remove the node..
+                if (count == 0) {
+                    // if its the zero node.. 
+                    // change the this.list.head.next to be this.list.head
+                    this.list.head = this.list.head.next
+                }
+                else {
+        
+                  let size = this.size()
+                  if (size = count - 1) {
+                    // in the event we are removing something from the end only.. 
+                    // we just need set the prior nodes next value to null..
+                  
+                 
+                    prevnode.next.next = null
+
+                  }
+
+                  else {
+                    prevnode.next = selectednode.next 
+
+                  }
+                  
+                    
+                }
+            }
+
+            if (selectednode.next == null) {
+                return 'nullnode'
+            }
+            prevnode = selectednode
+            count++
+            this.removeAt(index,count,selectednode.next)
+
+
+        },
+
+
 
     list: { head: {
         
@@ -185,7 +231,7 @@ const dog = linkedList()
 //dog.append(22)
 //console.log(dog.list.head)
 //console.log(dog.tail(), 'tailfn')
-//dog.append(1)
+dog.append(1)
 dog.append(122)
 dog.append(3)
 
@@ -193,9 +239,10 @@ dog.append(3)
 //console.log(dog.toString())
 //dog.pop()
  // console.log(  dog.find(122))
+
     console.log(dog.list)
-    console.log(dog.insertAt(2,1))
-    
+   // console.log(dog.insertAt(2,1))
+   dog.removeAt(3)
     console.log(dog.list)
 
 function node(value) {
