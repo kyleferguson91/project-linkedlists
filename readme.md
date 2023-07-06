@@ -13,5 +13,5 @@ Data Structures
 - `contains(value)` - returns true if the passed in value is in the list, and otherwise false
 - `find(value)` - returns the index of the node containing value, or null if not foudn
 - `toString()` - use with console.log to get a text representation of the list 
-- <span style="background-color:blue">insertAt(value,index)</span>. - inserts value at index in the list
-- <span style='background-color:blue'>removeAt(index)</span> - removes the node at specified index
+- `insertAt(value,index)` - inserts value at index in the list
+- `removeAt(index)` - removes the node at specified index
