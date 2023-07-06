@@ -49,11 +49,13 @@ if (this.list.head.value == null) {
     size: function(node = this.list.head, count = 0) {
         // assuming that a 'node' contains both a data and next field
         if (node.next == null) {
-            if (node.value) {   count++}
-            return count
+            if (node.value) {   return 1}
+            else {
+                return 0
+            }
         }
-        count++
-       return     this.size(node.next, count)
+        
+       return    1 +  this.size(node.next)
     },
 
     head: function() {
@@ -69,7 +71,18 @@ if (this.list.head.value == null) {
 
     },
     
-    
+    pop: function(node = this.list.head, prevnode) {
+// we need to traverse through the list until we reach the tail node, and then set that node to null
+
+if (node.next == null) {
+   prevnode.next = null
+   return
+}
+prevnode = node
+node = node.next
+return this.pop(node, prevnode)
+
+    },
 
     list: { head: {
         
@@ -86,12 +99,14 @@ const dog = linkedList()
 //dog.append(22)
 //console.log(dog.list.head)
 //console.log(dog.tail(), 'tailfn')
-dog.append(1)
-dog.append(122)
-dog.append(3)
+//dog.append(1)
+//dog.append(122)
+//dog.append(3)
 dog.append(17)
-dog.append(3)
-console.log(dog.tail().value)
+dog.prepend(3)
+dog.pop()
+console.log(dog.list)
+
 function node(value) {
 
     return {
