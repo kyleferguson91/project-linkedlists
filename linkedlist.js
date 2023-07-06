@@ -136,15 +136,35 @@ if (node.next == null && node.value !== value) {
             // inserts the given value at the specified index..
             // go through one by one, counting the index each time until we have a match.. 
             // once we have a match we are to set the previous nodes next value to the insert value, and the current nodes next value to the rest of the list..
-
-
+            if (index == count) {
+                if (index == 0 && count == 0) {
+                    this.prepend(value)
+                    return
+                }
+               // set the current nodes next value to the current node+
+                let current = node
+           
+                let stored = createnode(value)
+                
+          
+                prevnode.next = stored
+                prevnode.next.next = current
+      
+               return
+            }
+            
             if (node.next == null) {
                 // reached the end of the list..
-               
+               return
             }
+     
+
+            // if we reach the end of the list without finding the index, we return
+            // otherwise we can check if we are at the index..
             
            
             prevnode = node
+            count++ 
             return this.insertAt(value,index, node.next, prevnode,count)
 
             
@@ -166,16 +186,28 @@ const dog = linkedList()
 //console.log(dog.list.head)
 //console.log(dog.tail(), 'tailfn')
 //dog.append(1)
-//dog.append(122)
-//dog.append(3)
+dog.append(122)
+dog.append(3)
 
 //dog.append(17)
-console.log(dog.toString())
+//console.log(dog.toString())
 //dog.pop()
  // console.log(  dog.find(122))
     console.log(dog.list)
+    console.log(dog.insertAt(2,1))
+    
+    console.log(dog.list)
 
 function node(value) {
+
+    return {
+value: value,
+next: this.next || null
+    }
+}
+
+
+function createnode(value) {
 
     return {
 value: value,
