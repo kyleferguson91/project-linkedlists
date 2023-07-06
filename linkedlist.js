@@ -71,16 +71,53 @@ if (this.list.head.value == null) {
 
     },
     
-    pop: function(node = this.list.head, prevnode) {
+    pop: function(node = this.list.head, prevnode = this.list.head) {
 // we need to traverse through the list until we reach the tail node, and then set that node to null
 
 if (node.next == null) {
-   prevnode.next = null
+    
+    // this exists so if we have a list with only one item, then node equals previous node which are both the same at the start.. 
+    // so the head of the list is now empt
+  if (node == prevnode) {
+this.list.head = null
+  } 
+  else {
+    prevnode.next = null
+  }
    return
 }
 prevnode = node
 node = node.next
 return this.pop(node, prevnode)
+
+    },
+
+    contains: function(value, node = this.list.head) {
+        // return true if value is in list otherwise return false
+        // go through every value in the list, if we have a match return true
+if (node.next == null && node.value !== value) {
+    return false
+}
+        if (node.value === value) {
+            return true
+        }
+
+        return this.contains(value, node.next)
+        
+        
+
+    },
+
+    find: function(value, node = this.list.head, count = 0) {
+
+        if (node.next == null && node.value !== value) {
+            return null
+        }
+        if (node.value === value) {
+            return count
+        }
+        count++
+        return this.find(value, node.next, count)
 
     },
 
@@ -100,12 +137,13 @@ const dog = linkedList()
 //console.log(dog.list.head)
 //console.log(dog.tail(), 'tailfn')
 //dog.append(1)
-//dog.append(122)
-//dog.append(3)
+dog.append(122)
+dog.append(3)
+
 dog.append(17)
-dog.prepend(3)
-dog.pop()
-console.log(dog.list)
+//dog.pop()
+  console.log(  dog.find(122))
+    console.log(dog.list)
 
 function node(value) {
 
