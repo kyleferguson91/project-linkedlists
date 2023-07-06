@@ -70,6 +70,39 @@ if (this.list.head.value == null) {
        return this.tail(node.next)
 
     },
+    at: function(index, count = 0,selectednode = this.list.head) {
+    
+        if (index > this.size() || index < 0) {
+            return 'out of bounds of list'
+        }
+        // should return the node at the given index..
+        // traverse through the list
+        if (count > index) {
+            return 'out of bounds of list'
+        }
+        else if (index == 0) {
+            return this.list.head.value
+         }
+         else {
+            if (index == count) {
+            return    selectednode.value
+
+            }
+  
+         }
+        
+        count++
+   
+        if (!selectednode.next) {
+            return 'out of list bounds'
+        }
+        else {
+            selectednode = selectednode.next 
+     
+        }
+
+        return  this.at(index,count,selectednode)
+    },
     
     pop: function(node = this.list.head, prevnode = this.list.head) {
 // we need to traverse through the list until we reach the tail node, and then set that node to null
@@ -226,24 +259,6 @@ if (node.next == null && node.value !== value) {
 
 }
 
-const dog = linkedList()
-
-//dog.append(22)
-//console.log(dog.list.head)
-//console.log(dog.tail(), 'tailfn')
-dog.append(1)
-dog.append(122)
-dog.append(3)
-
-//dog.append(17)
-//console.log(dog.toString())
-//dog.pop()
- // console.log(  dog.find(122))
-
-    console.log(dog.list)
-   // console.log(dog.insertAt(2,1))
-   dog.removeAt(3)
-    console.log(dog.list)
 
 function node(value) {
 
@@ -254,10 +269,3 @@ next: this.next || null
 }
 
 
-function createnode(value) {
-
-    return {
-value: value,
-next: this.next || null
-    }
-}
